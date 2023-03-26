@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <h1>Login Page</h1>
+    <form>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" /><br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" /><br />
+      <input type="submit" value="Submit" />
+    </form>
+    <div id="response"></div>
+
+    <script>
+      const form1 = document.querySelector("form");
+      const response1 = document.querySelector("#response");
+
+      form1.addEventListener("submit", (event) => {
+        event.preventDefault(); // prevent form submission
+
+        const username = document.querySelector("#username").value;
+        const password = document.querySelector("#password").value;
+
+        // create the data object
+        const data = { username: username, password: password };
+
+        // make the GET request
+        fetch("https://lol.serveo.net/verify", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response1) => response1.json())
+          .then((data) => {
+            // display the response
+            response.innerHTML = JSON.stringify(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
